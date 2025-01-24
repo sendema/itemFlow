@@ -1,4 +1,4 @@
-## Реализованный функционал
+## Что было реализовано:
 - CRUD операции с продуктами
     - Создание, чтение, обновление и удаление продуктов
     - Local Scope для фильтрации доступных продуктов (status = available)
@@ -9,6 +9,11 @@
 - Webhook интеграция
 - Валидация данных
 - Eloquent Model с кастомным скоупом
+
+## Дополнительно
+
+- Написание тестов
+- Упаковка в контейнеры
 
 ## Установка и запуск
 
@@ -31,13 +36,13 @@ QUEUE_CONNECTION=database
 MAIL_MAILER=smtp
 MAIL_HOST=smtp.yandex.ru
 MAIL_PORT=465
-MAIL_USERNAME=markhaevd@yandex.ru
-MAIL_PASSWORD=kisguwwsloaofsjh
+MAIL_USERNAME=
+MAIL_PASSWORD=
 MAIL_ENCRYPTION=ssl
-MAIL_FROM_ADDRESS=markhaevd@yandex.ru
+MAIL_FROM_ADDRESS=
 MAIL_FROM_NAME="${APP_NAME}"
 
-PRODUCTS_EMAIL=markhaevd@yandex.ru
+PRODUCTS_EMAIL=
 PRODUCT_WEBHOOK_URL=https://webhook.site/0fabc4e7-f2d0-4453-aaee-162878f6707c
 ```
 
