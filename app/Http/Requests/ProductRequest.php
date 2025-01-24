@@ -5,6 +5,9 @@ namespace App\Http\Requests;
 use App\Services\ProductService;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Класс валидации запросов для продуктов
+ */
 class ProductRequest extends FormRequest
 {
     private ProductService $productService;
@@ -14,6 +17,11 @@ class ProductRequest extends FormRequest
         $this->productService = $productService;
     }
 
+    /**
+     * Правила валидации для продукта
+     *
+     * @return array Массив правил валидации
+     */
     public function rules(): array
     {
         $rules = [
@@ -24,7 +32,7 @@ class ProductRequest extends FormRequest
             'data.size' => 'required|string',
         ];
 
-        if ($this->isMethod('post') || $this->productService->canEditArticle()) {
+        if ($this->isMethod('post') && $this->productService->canEditArticle()) {
             $rules['article'] = [
                 'required',
                 'regex:/^[a-zA-Z0-9]+$/',
@@ -35,6 +43,11 @@ class ProductRequest extends FormRequest
         return $rules;
     }
 
+    /**
+     * Пользовательские сообщения об ошибках валидации
+     *
+     * @return array Массив сообщений об ошибках
+     */
     public function messages(): array
     {
         return [

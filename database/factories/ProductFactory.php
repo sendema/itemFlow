@@ -5,32 +5,38 @@ namespace Database\Factories;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * Factory для создания тестовых продуктов
+ */
 class ProductFactory extends Factory
 {
     protected $model = Product::class;
 
-    private $russianColors = [
-        'Красный', 'Синий', 'Зеленый', 'Желтый', 'Черный',
-        'Белый', 'Серый', 'Фиолетовый', 'Оранжевый', 'Коричневый'
-    ];
-
-    private $russianNames = [
-        'Футболка', 'Джинсы', 'Куртка', 'Рубашка', 'Платье',
-        'Свитер', 'Шорты', 'Пальто', 'Юбка', 'Костюм'
-    ];
-
-    public function definition()
+    /**
+     * Определение структуры данных продукта
+     */
+    public function definition(): array
     {
-        $this->faker->addProvider(new \Faker\Provider\ru_RU\Person($this->faker));
-
         return [
-            'article' => strtoupper($this->faker->unique()->bothify('ART-#####-??')),
-            'name' => $this->faker->randomElement($this->russianNames) . ' ' . $this->faker->words(2, true),
+            'name' => $this->faker->sentence(2),
+            'article' => strtoupper($this->faker->unique()->bothify('ART#####')),
             'status' => $this->faker->randomElement(['available', 'unavailable']),
             'data' => [
-                'color' => $this->faker->randomElement($this->russianColors),
-                'size' => $this->faker->randomElement(['S', 'M', 'L', 'XL']),
-            ],
+                'color' => $this->faker->safeColorName(),
+                'size' => $this->faker->randomElement(['S', 'M', 'L', 'XL'])
+            ]
         ];
+    }
+
+    /**
+     * Состояние для доступного продукта
+     */
+    public function available(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'status' => 'available'
+            ];
+        });
     }
 }

@@ -2,39 +2,22 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Product;
+use App\Services\WebhookService;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Http;
 
 class SendLatestProductWebhook extends Command
 {
     protected $signature = 'products:webhook';
     protected $description = 'Send latest product data to webhook';
 
-    public function handle()
+    public function handle(WebhookService $webhookService)
     {
-        $product = Product::latest('id')->first();
-
-        if (!$product) {
-            $this->error('No products found');
-            return 1;
-        }
-
         try {
-            $response = Http::post(config('products.webhook'), [
-                'product' => $product->toArray()
-            ]);
-
-            if ($response->successful()) {
-                $this->info('Webhook sent successfully');
-                return 0;
-            }
-
-            $this->error('Webhook failed: ' . $response->status());
-            return 1;
-
+            $webhookService->sendLatestProduct();
+            $this->info('Webhook sent successfully');
+            return 0;
         } catch (\Exception $e) {
-            $this->error('Error sending webhook: ' . $e->getMessage());
+            $this->error($e->getMessage());
             return 1;
         }
     }

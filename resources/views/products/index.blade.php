@@ -25,11 +25,12 @@
                                 <h3 class="text-xl font-semibold mb-2">{{ $product->name }}</h3>
                                 <p class="text-gray-600 mb-2">Article: {{ $product->article }}</p>
                                 <p class="mb-2">
-                                <span class="px-2 py-1 rounded text-sm {{ $product->status === 'available' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                                    {{ ucfirst($product->status) }}
-                                </span>
+                                    <span class="px-2 py-1 rounded text-sm {{ $product->status === 'available' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                        {{ ucfirst($product->status) }}
+                                    </span>
                                 </p>
                                 <div class="mt-4 flex justify-end space-x-2">
+                                    <a href="{{ route('products.show', $product) }}" class="bg-blue-500 hover:bg-blue-700 text-white py-1 px-3 rounded">View</a>
                                     <a href="{{ route('products.edit', $product) }}" class="bg-yellow-500 hover:bg-yellow-700 text-white py-1 px-3 rounded">Edit</a>
                                     <form action="{{ route('products.destroy', $product) }}" method="POST" class="inline">
                                         @csrf
