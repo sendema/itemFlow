@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Enums\UserRole;
+
 /**
  * Сервис для работы с продуктами
  */
@@ -14,6 +16,6 @@ class ProductService
      */
     public function canEditArticle(): bool
     {
-        return config('products.role') === 'admin';
+        return config('products.role') === UserRole::ADMIN->value;
     }
 }

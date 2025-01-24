@@ -11,12 +11,25 @@ use Illuminate\Support\Facades\Http;
 class WebhookService
 {
     /**
+     * URL для отправки webhook-уведомлений
+     */
+    private string $webhookUrl;
+
+    /**
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->webhookUrl = config('products.webhook');
+    }
+
+    /**
      * Отправка информации о последнем созданном продукте через webhook
      *
      * @throws \Exception Если продукт не найден или webhook не отвечает
      * @return bool
      */
-    public function sendLatestProduct()
+    public function sendLatestProduct(): bool
     {
         $product = Product::latest('id')->first();
 
@@ -24,7 +37,7 @@ class WebhookService
             throw new \Exception('No products found');
         }
 
-        $response = Http::post(config('products.webhook'), [
+        $response = Http::post($this->webhookUrl, [
             'product' => $product->toArray()
         ]);
 
